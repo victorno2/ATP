@@ -1,0 +1,10 @@
+CUDA_ROOT_DIR=/home/ubuntu/software/cuda-10.2
+CUDNN_ROOT_DIR=/home/ubuntu/software/cuda-10.2
+GLOG_ROOT=/home/ubuntu/software/glog-0.4.0/
+
+# example
+# LIBJPEG_INCLUDE_DIR = /usr/include/
+# LIBJPEG_LIB_FILE = /usr/lib/x86_64-linux-gnu/libjpeg.so
+
+# MPI_INCLUDE_DIR =
+# MPI_LIB_FILE =
