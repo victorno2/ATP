@@ -109,9 +109,11 @@ int main(int argc, char **argv) {
     size_t gpu_mem = 34078720000;  // 32GB
     double pcie_bandwidth = 11084901888;  // PCIE 3.0
 	swap_net->set_simulator(gpu_mem, pcie_bandwidth);
+    size_t inherent_size = (one_batch_inherent_size + ceil(inherent_size_step * (double)batch_size)) * (size_t)1024*(size_t)1024; // + (size_t)20*(size_t)1024*(size_t)1024;
+    swap_net->set_inherent_size(inherent_size);
     size_t no_update_win = 2;
 
-    ThroughputPeakSearch(  data_rnn, ctcloss, &n, processor_train, reader1, gpu_mem, pcie_bandwidth, 
+    ThroughputPeakSearch(  data_rnn, ctcloss, &n, processor_train, reader1, gpu_mem, pcie_bandwidth, inherent_size,
                 baseline_batchsize, max_batchsize, batchsize_step, iter_times, no_update_win, true,
                 population_size, 0.0005, ga_iter_times);
 

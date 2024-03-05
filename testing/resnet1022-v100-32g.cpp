@@ -419,7 +419,7 @@ int main(int argc, char **argv) {
     const size_t baseline_batchsize = static_cast<const size_t>(atoi(argv[2]));
     const size_t batchsize_step = static_cast<const size_t>(atoi(argv[3]));
 	const size_t max_batchsize = static_cast<const size_t>(atoi(argv[4]));
-    const size_t iter_times = static_cast<const size_t>(atoi(argv[4]));
+    const size_t iter_times = static_cast<const size_t>(atoi(argv[5]));
     const size_t ga_iter_times = static_cast<const size_t>(atoi(argv[6]));
     const size_t population_size = static_cast<const size_t>(atoi(argv[7]));
     const size_t batch_size_num = (max_batchsize - baseline_batchsize) / batchsize_step + 1;
@@ -429,9 +429,11 @@ int main(int argc, char **argv) {
     size_t gpu_mem = 33973862400;  // 32GB
     double pcie_bandwidth = 11823420144;  // 
 	swap_net->set_simulator(gpu_mem, pcie_bandwidth);
+	size_t inherent_size = (one_batch_inherent_size + ceil(inherent_size_step * (double)batch_size)) * (size_t)1024*(size_t)1024; // + (size_t)20*(size_t)1024*(size_t)1024;
+    swap_net->set_inherent_size(inherent_size);
     size_t no_update_win = 3;
 
-    ThroughputPeakSearch(  data_train, softmax, &n, p, reader1, gpu_mem, pcie_bandwidth, 
+    ThroughputPeakSearch(  data_train, softmax, &n, p, reader1, gpu_mem, pcie_bandwidth, inherent_size,
                 baseline_batchsize, max_batchsize, batchsize_step, iter_times, no_update_win, false,
                 population_size, 0.0005, 100);
 

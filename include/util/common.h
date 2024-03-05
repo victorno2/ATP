@@ -29,8 +29,8 @@
 // #define BIG_BATCHSIZE 64    // Gradient accumulation batchsize
 
 // #define BASELINE_TRAINING               // run the training without recomputation and swapping
-// #define TRAINING_CONFIGURATION_SEARCH  // run the best training configuration search (search the batch size, recomputing tensors and swapping tensors)
-#define RECOPUTING_SWAPPING_TRAINING    // run the training with the strategy of ATP
+#define TRAINING_CONFIGURATION_SEARCH  // run the best training configuration search (search the batch size, recomputing tensors and swapping tensors)
+// #define RECOPUTING_SWAPPING_TRAINING    // run the training with the strategy of ATP
 
 #define ATP_SOLUTION
 

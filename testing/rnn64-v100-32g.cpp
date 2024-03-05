@@ -96,12 +96,13 @@ int main(int argc, char **argv) {
     double inherent_size_step = 0.4;
     
 #ifdef BEST_BATCHSIZE
-    std::map<int, size_t> modnn_offload_size;
+
     ATPSearch<float> *swap_net = new ATPSearch<float>(&n);
-    // size_t gpu_mem = 17179869184;  // 16GB
     size_t gpu_mem = 34078720000;  // 32GB
     double pcie_bandwidth = 11084901888;  // PCIE 3.0
 	swap_net->set_simulator(gpu_mem, pcie_bandwidth);
+	size_t inherent_size = (one_batch_inherent_size + ceil(inherent_size_step * (double)batch_size)) * (size_t)1024*(size_t)1024; // + (size_t)20*(size_t)1024*(size_t)1024;
+    swap_net->set_inherent_size(inherent_size);
 
     const size_t baseline_batchsize = static_cast<const size_t>(atoi(argv[2]));
     const size_t batchsize_step = static_cast<const size_t>(atoi(argv[3]));
@@ -112,7 +113,7 @@ int main(int argc, char **argv) {
     const size_t batch_size_num = (max_batchsize - baseline_batchsize) / batchsize_step + 1;
     size_t no_update_win = 2;
 
-    ThroughputPeakSearch(  data_rnn, ctcloss, &n, processor_train, reader1, gpu_mem, pcie_bandwidth, 
+    ThroughputPeakSearch(  data_rnn, ctcloss, &n, processor_train, reader1, gpu_mem, pcie_bandwidth, inherent_size,
                 baseline_batchsize, max_batchsize, batchsize_step, iter_times, no_update_win, true,
                 population_size, 0.0005, ga_iter_times);
 
